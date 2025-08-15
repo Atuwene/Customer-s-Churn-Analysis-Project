@@ -1,80 +1,73 @@
-# Customer Churn Analysis – Logistic Regression (Baseline vs Improved Model)
+# Telco Customer Churn Prediction
 
 ## 📌 Project Overview
-This project predicts whether a customer will churn (leave a service) based on their account information and usage patterns.  
-The main goal is to help businesses identify customers at risk and take action to retain them.
+This project predicts **customer churn** (whether a customer will leave the service) using the **Telco Customer Churn dataset**.  
+The main goal is to help businesses **identify customers at risk** so they can take proactive steps to retain them.
 
-The project is divided into **two phases**:
-1. **Baseline Model** – Logistic Regression without any balancing techniques.
-2. **Improved Model** – Logistic Regression with SMOTE oversampling to handle class imbalance.
+We built multiple Logistic Regression models — starting with a baseline model and then improving it using **SMOTE** oversampling and class balancing techniques.
 
 ---
 
-## 🗂 Dataset
-**Source:** Telco Customer Churn Dataset (Kaggle)  
-**Target Variable:** `Churn` (Yes/No)  
-**Number of Rows:** ~7043  
-**Number of Features:** 21 (after encoding)
+## 📂 Dataset
+- **Source:** IBM Telco Customer Churn dataset
+- **Size:** 7,043 rows × 21 columns
+- **Target variable:** `Churn` (Yes = customer left, No = customer stayed)
+
+Key features include:
+- **Demographics:** gender, senior citizen, partner, dependents
+- **Account info:** tenure, contract type, payment method
+- **Service usage:** internet service, phone service, streaming, etc.
+- **Billing details:** monthly charges, total charges
 
 ---
 
-## 🛠 Tools & Libraries
-- **Python**
-- **Pandas & NumPy** – Data handling and preprocessing
-- **Matplotlib & Seaborn** – Visualization
-- **scikit-learn** – Model building & evaluation
-- **imblearn (SMOTE)** – Handling imbalanced data
+## 🛠️ Technologies Used
+- **Python** (Pandas, NumPy)
+- **Scikit-learn** (Logistic Regression, train-test split, metrics)
+- **Imbalanced-learn** (SMOTE)
+- **Matplotlib & Seaborn** (visualizations)
+- **Google Colab** (development environment)
 
 ---
 
-## 📊 Data Preprocessing
-- Removed unnecessary columns (`customerID`)
-- Converted `TotalCharges` to numeric and handled missing values
-- One-hot encoded categorical variables
-- Standardized numerical features
+## 📊 Approach & Steps
+
+### 1. **Data Cleaning**
+- Converted `TotalCharges` to numeric and handled missing values.
+- Encoded `Churn` into binary values (`Yes` → 1, `No` → 0).
+- Applied **One-Hot Encoding** to categorical features.
+
+### 2. **Baseline Model**
+- Model: Logistic Regression (`class_weight='balanced'`)
+- Train-test split: 80% training, 20% testing
+- **Results:**
+- **Observation:** Recall was decent, but precision for churned customers could be improved.
+
+### 3. **Model Improvement**
+- Applied **SMOTE** oversampling to handle class imbalance.
+- Re-trained Logistic Regression without explicit class weights.
+- **Results after improvement:**
+
+- **Outcome:** More balanced results and slightly improved accuracy.
 
 ---
 
-## 📉 Churn Distribution
-![Churn Distribution](images/churn_distribution.png)
+## 📈 Evaluation Metrics
+- **Confusion Matrix**
+- **Classification Report** (Precision, Recall, F1-score)
+- **ROC-AUC Score**
 
-The dataset was **imbalanced**, with more customers staying than churning, which can affect model performance.
-
----
-
-## ⚙ Baseline Model – Logistic Regression
-**Model:** Logistic Regression (max_iter=1000)  
-**Balancing:** None
-
-**Results:**
-- **Precision, Recall, F1-score** showed poor recall for churned customers.
-- **ROC-AUC Score:** *[Insert your baseline score here]*
+The final model achieved:
+- **Accuracy:** 76%
+- **ROC-AUC:** 0.84
+- **Better balance** between predicting churn and non-churn customers.
 
 ---
 
-## 🔄 Improved Model – Logistic Regression with SMOTE
-To improve churn prediction, **SMOTE (Synthetic Minority Oversampling Technique)** was applied to balance the dataset.
+## 🚀 How to Run
+1. Clone the repository:
+ ```bash
+ git clone https://github.com/yourusername/telco-customer-churn.git
 
-**Results:**
-- Improved recall for churned customers
-- **ROC-AUC Score:** *[Insert your improved score here]*
-
-**Confusion Matrix:**
-![Confusion Matrix](images/confusion_matrix.png)
-
----
-
-## 📌 Key Insights
-- The baseline model struggled to identify churned customers due to data imbalance.
-- Applying SMOTE improved the recall score significantly, making the model better at detecting churn.
-- ROC-AUC score increased, showing better overall classification performance.
-
----
-
-## 🚀 How to Run the Project
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/yourusername/customer-churn-analysis.git
-   pip install -r requirements.txt
-python customer_churn_analysis.py
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Atuwene/telco-customer-churn/blob/main/customer_churn_analysis.ipynb)
 
